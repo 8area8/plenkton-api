@@ -8,14 +8,13 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   web:
-    build:
-      context: ./back/
-    command: uvicorn server:app --host='0.0.0.0' --debug --reload
+    build: .
+    command: uvicorn back.server:app --host='0.0.0.0' --debug --reload
     container_name: plenkton-app
     environment:
       - DATABASE_URL
     volumes:
-      - ./back:/code
+      - .:/code
     ports:
       - "8000:8000"
     depends_on:
