@@ -1,0 +1,21 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=djangodb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    command: uvicorn back.server:app --host='0.0.0.0' --debug --reload
+    container_name: plenkton-app
+    environment:
+      - DATABASE_URL
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
