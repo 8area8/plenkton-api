@@ -24,3 +24,8 @@ def down(command):
 def pytest(command):
     """Run the python tests inside the web container."""
     command.run("docker-compose run --rm web python3 -m pytest")
+
+@task
+def vuesh(command):
+    """Create a bash terminal in the vue container."""
+    command.run("docker-compose run --rm vue /bin/sh")

@@ -8,14 +8,24 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   web:
-    build: .
-    command: uvicorn back.server:app --host='0.0.0.0' --debug --reload
+    build:
+      context: ./back/
+    command: uvicorn server:app --host='0.0.0.0' --debug --reload
     container_name: plenkton-app
     environment:
       - DATABASE_URL
     volumes:
-      - .:/code
+      - ./back:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
+  vue:
+    build:
+      context: ./front/
+    command: yarn serve --host 0.0.0.0 --port 3000
+    container_name: vuecli-app
+    volumes:
+      - ./front:/code
+    ports:
+      - "3000:3000"
