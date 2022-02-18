@@ -1,7 +1,33 @@
-name: Backend
+name: Plenkton tests
 on: [push]
 jobs:
-  test:
+  jest:
+    runs-on: ubuntu-latest
+    name: VueJs Jest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 17
+
+      - name: Install dependencies
+        run: cd front && yarn install
+
+      - name: Run the tests
+        run: cd front && yarn run jest
+
+      - name: Generate dist
+        run: cd front && yarn run build
+
+      - name: Share dist folder
+        uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: front/dist
+
+  pytest:
+    needs: jest
     runs-on: ubuntu-latest
     name: Python tests
     steps:
@@ -17,5 +43,11 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
+      - name: Integrate dist folder
+        uses: actions/download-artifact@master
+        with:
+          name: dist
+          path: front/dist
+
       - name: Run the tests
-        run: poetry run python -m pytest
+        run: poetry run python -m pytest back
