@@ -31,3 +31,19 @@ If you install invoke globally (`pip3 install invoke`), you can use the invoke t
 
 - pattern: `inv <task>`
 - example: `inv build` - will build the containers.
+
+## Google Cloud Storage
+
+We use Google Cloud storage to send the `dist` folder to the cloud.
+The production configuration replace the `static/` prefix by the google cloud storage url.
+
+- Install [Google Cloud Console](https://cloud.google.com/sdk/docs/install#deb).
+- Create a bucket.
+- Render the [bucket public](https://cloud.google.com/storage/docs/access-control/making-data-public?hl=fr)
+- Import files/folder from [command line](https://cloud.google.com/storage/docs/uploading-objects#prereq-cli)
+
+### Be sure your CI works
+
+- We use the [upload cloud storage](https://github.com/google-github-actions/upload-cloud-storage) action.
+- Add a Github secret variable `GCP_CREDENTIALS` to connect to google cloud from your local machine and from the CI ([generate a key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys), [access to your service accounts](https://console.cloud.google.com/iam-admin/serviceaccounts?referrer=search&project=plenkton)).
+- Add a Github secret variable `CLOUD_BASE_URL` to translate the `static` prefix into `https://storage.googleapis.com/<your-bucket>/dist/` when you build the `dist` folder.
