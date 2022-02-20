@@ -22,7 +22,7 @@ services:
   vue:
     build:
       context: ./front/
-    command: yarn serve --host 0.0.0.0 --port 3000
+    command: yarn run serve --host 0.0.0.0 --port 3000
     container_name: vuecli-app
     volumes:
       - ./front:/code
