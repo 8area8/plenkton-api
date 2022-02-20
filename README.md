@@ -47,3 +47,13 @@ The production configuration replace the `static/` prefix by the google cloud st
 - We use the [upload cloud storage](https://github.com/google-github-actions/upload-cloud-storage) action.
 - Add a Github secret variable `GCP_CREDENTIALS` to connect to google cloud from your local machine and from the CI ([generate a key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys), [access to your service accounts](https://console.cloud.google.com/iam-admin/serviceaccounts?referrer=search&project=plenkton)).
 - Add a Github secret variable `CLOUD_BASE_URL` to translate the `static` prefix into `https://storage.googleapis.com/<your-bucket>/dist/` when you build the `dist` folder.
+
+## Deploy to Heroku
+
+We deploy to heroku using the `.heroku.yml`. `Procfile` is not required. ;)
+
+- Use heroku cli to login : `heroku login`
+- Add your remote to git : `heroku git:remote -a plenkton`
+- Set the container stack: `heroku stack:set container`
+- Set env variable `DEBUG` to False on Heroku: `heroku config:set DEBUG=False`
+- Configure the automatic deployment by [linking heroku to your github account](https://devcenter.heroku.com/articles/github-integration).
