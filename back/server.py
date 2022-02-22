@@ -7,8 +7,11 @@ from starlette.responses import FileResponse, HTMLResponse
 import httpx
 
 from .config import settings
+from .graphql import base
 
 app = FastAPI()
+
+app.include_router(base.graphql_app, prefix="/graphql")
 
 
 if settings.DEBUG:
