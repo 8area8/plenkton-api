@@ -13,6 +13,7 @@ requests = "^2.27.1"
 black = "^22.1.0"
 gunicorn = "^20.1.0"
 httpx = "^0.22.0"
+strawberry-graphql = "^0.97.0"
 
 [tool.poetry.dev-dependencies]
 
