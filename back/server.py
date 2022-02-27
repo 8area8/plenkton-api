@@ -7,11 +7,26 @@ from starlette.responses import FileResponse, HTMLResponse
 import httpx
 
 from .config import settings
-from .graphql import base
+from .graphql import base as gql
+from .db import base as db
 
 app = FastAPI()
+app.include_router(gql.graphql_app, prefix="/graphql")
+app.state.database = db.database
 
-app.include_router(base.graphql_app, prefix="/graphql")
+
+@app.on_event("startup")
+async def startup() -> None:
+    database_ = app.state.database
+    if not database_.is_connected:
+        await database_.connect()
+
+
+@app.on_event("shutdown")
+async def shutdown() -> None:
+    database_ = app.state.database
+    if database_.is_connected:
+        await database_.disconnect()
 
 
 if settings.DEBUG:
@@ -29,7 +44,6 @@ class HTMLIndex:
         """Get the html content."""
         async with httpx.AsyncClient() as httpx_client:
             response = await httpx_client.get(cls.url)
-            print("response from index class:", response.content)
             cls.html = response.content
 
 
@@ -44,7 +58,6 @@ async def root():
     """
     if settings.DEBUG:
         return FileResponse("front/dist/index.html")
-    print(HTMLIndex.html)
     if not HTMLIndex.html:
         await HTMLIndex.load()
     return HTMLResponse(HTMLIndex.html)
