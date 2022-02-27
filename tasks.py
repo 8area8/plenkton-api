@@ -5,32 +5,48 @@ You need to install invoke globally to use this file.
 
 from invoke import task
 
+PYTHON_DOCKER = "docker-compose run --rm web"
+VUE_DOCKER = "docker-compose run --rm vue"
+
+
 @task
 def build(command):
     """Build the containers."""
     command.run("docker-compose build", pty=True)
+
 
 @task
 def up(command):
     """Up the containers."""
     command.run("docker-compose up -d", pty=True)
 
+
 @task
 def down(command):
     """Stop and down the containers."""
     command.run("docker-compose down", pty=True)
 
-@task
-def pytest(command):
-    """Run the python tests inside the web container."""
-    command.run("docker-compose run --rm web python3 -m pytest", pty=True)
+
+@task(down, build, up)
+def repop(command):
+    """Stop, build and launch the containers."""
+
 
 @task
 def jest(command):
     """Run the Jest tests inside the vue container."""
-    command.run("docker-compose run --rm vue yarn run jest", pty=True)
+    command.run(f"{VUE_DOCKER} yarn run jest", pty=True)
+
 
 @task
 def vuesh(command):
     """Create a bash terminal in the vue container."""
-    command.run("docker-compose run --rm vue /bin/sh", pty=True)
+    command.run(f"{VUE_DOCKER} /bin/sh", pty=True)
+
+
+@task
+def pytest(command):
+    """Run the python tests inside the web container."""
+    command.run(f"{PYTHON_DOCKER} pytest back", pty=True)
+
+

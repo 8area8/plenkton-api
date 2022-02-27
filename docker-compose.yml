@@ -4,7 +4,15 @@ services:
   db:
     image: postgres
     environment:
-      - POSTGRES_DB=djangodb
+      - POSTGRES_DB=plenktondb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  test-db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=plenktondb
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   web:
@@ -12,7 +20,7 @@ services:
     command: uvicorn back.server:app --host='0.0.0.0' --debug --reload
     container_name: plenkton-app
     environment:
-      - DATABASE_URL
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/plenktondb
     volumes:
       - .:/code
     ports:
