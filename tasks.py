@@ -50,3 +50,27 @@ def pytest(command):
     command.run(f"{PYTHON_DOCKER} pytest back", pty=True)
 
 
+@task
+def make_migrations(command, msg):
+    """Generate alembic migration"""
+    command.run(f"{PYTHON_DOCKER} alembic revision --autogenerate -m {msg}", pty=True)
+
+
+@task
+def revert_migration(command, version_identifier):
+    """Revert alembic migration"""
+    command.run(
+        f"{PYTHON_DOCKER} alembic downgrade {version_identifier} --sql", pty=True
+    )
+
+
+@task
+def show_migrations(command):
+    """Show alembic migrations."""
+    command.run(f"{PYTHON_DOCKER} alembic history", pty=True)
+
+
+@task
+def migrate(command):
+    """Apply alembic migrations to the current database."""
+    command.run(f"{PYTHON_DOCKER} alembic upgrade head --sql", pty=True)
