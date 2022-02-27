@@ -4,10 +4,14 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { injectAuth } from 'vue-auth0-plugin'
 
-export default defineComponent({
-  name: "HomeView",
-});
+const auth = injectAuth();
+
+if (auth) {
+  if (!auth.authenticated) {
+      auth.loginWithRedirect();
+  }
+}
 </script>
