@@ -19,6 +19,7 @@ psycopg2 = "^2.9.3"
 ormar = {extras = ["postgresql"], version = "^0.10.24"}
 python-slugify = "^6.1.0"
 readtime = "^1.1.1"
+PyJWT = {extras = ["crypto"], version = "^2.3.0"}
 
 [tool.poetry.dev-dependencies]
 

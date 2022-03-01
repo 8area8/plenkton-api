@@ -1,14 +1,16 @@
 """Base server."""
 
 from typing import Optional
+
+import httpx
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse, HTMLResponse
-import httpx
 
+from .auth.admin import CheckAdminMiddleware
 from .config import settings
-from .graphql import base as gql
 from .db import base as db
+from .graphql import base as gql
 
 app = FastAPI()
 app.include_router(gql.graphql_app, prefix="/graphql")
@@ -28,6 +30,8 @@ async def shutdown() -> None:
     if database_.is_connected:
         await database_.disconnect()
 
+
+app.add_middleware(CheckAdminMiddleware)
 
 if settings.DEBUG:
     app.mount("/static", StaticFiles(directory="front/dist"), name="static")

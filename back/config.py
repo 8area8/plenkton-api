@@ -30,5 +30,11 @@ class Settings(BaseSettings):
     TESTING: str = config("PYTEST_CURRENT_TEST", default="")
     DB_DSN = DB_TEST_DSN if TESTING else DB_PROD_DSN
 
+    # Auth0 part
+    AUTH0_AUDIENCE = config("AUTH0_AUDIENCE", default="")
+    AUTH0_ISSUER = config("AUTH0_ISSUER", default="")
+    AUTH0_DOMAIN = config("AUTH0_DOMAIN", default="")
+    AUTH0_ALGORITHMS = config("AUTH0_ALGORITHMS", default="RS256")
+
 
 settings = Settings()
