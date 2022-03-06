@@ -5,8 +5,7 @@ from unittest.mock import Mock, patch
 import pytest
 from httpx import AsyncClient
 
-from back.server import app, settings, HTMLIndex
-
+from back.__main__ import HTMLIndex, app, settings
 
 pytestmark = pytest.mark.anyio
 
@@ -54,7 +53,7 @@ async def test_requests_get_is_called_only_once(async_client):
     settings.DEBUG = False
     HTMLIndex.html = None
 
-    with patch("back.server.HTMLIndex") as mock:
+    with patch("back.__main__.HTMLIndex") as mock:
         called_in_load = Mock()
         mock.html = None
         mock.load = mock_load(mock, called_in_load)

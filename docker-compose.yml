@@ -17,7 +17,7 @@ services:
       - POSTGRES_PASSWORD=postgres
   web:
     build: .
-    command: uvicorn back.server:app --host='0.0.0.0' --debug --reload
+    command: uvicorn back.__main__:app --host='0.0.0.0' --debug --reload
     container_name: plenkton-app
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/plenktondb
