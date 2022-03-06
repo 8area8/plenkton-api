@@ -47,28 +47,28 @@ def vuesh(command):
 @task
 def pytest(command):
     """Run the python tests inside the web container."""
-    command.run(f"{PYTHON_DOCKER} pytest back", pty=True)
+    command.run("pytest back", pty=True)
 
 
 @task
 def make_migrations(command, msg=""):
     """Generate alembic migration"""
-    command.run(f"{PYTHON_DOCKER} alembic revision --autogenerate -m {msg}", pty=True)
+    command.run("alembic revision --autogenerate -m {msg}", pty=True)
 
 
 @task
 def revert_migration(command, version_identifier):
     """Revert alembic migration"""
-    command.run(f"{PYTHON_DOCKER} alembic downgrade {version_identifier}", pty=True)
+    command.run("alembic downgrade {version_identifier}", pty=True)
 
 
 @task
 def show_migrations(command):
     """Show alembic migrations."""
-    command.run(f"{PYTHON_DOCKER} alembic history", pty=True)
+    command.run("alembic history", pty=True)
 
 
 @task
 def migrate(command):
     """Apply alembic migrations to the current database."""
-    command.run(f"{PYTHON_DOCKER} alembic upgrade head", pty=True)
+    command.run("alembic upgrade head", pty=True)
