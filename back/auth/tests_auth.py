@@ -1,9 +1,6 @@
-"""Graphql tests.
+"""Test the authentication."""
 
-https://strawberry.rocks/docs/operations/testing
-"""
-
-from unittest.mock import AsyncMock, patch
+from unittest.mock import patch
 
 import pytest
 from httpx import AsyncClient
@@ -13,7 +10,7 @@ from back.db.base import database, metadata, settings, sqlalchemy
 from back.db.models import Author
 from back.server import app
 
-from .base import schema
+from .admin import install_admin_user
 
 pytestmark = pytest.mark.anyio
 
@@ -32,19 +29,6 @@ def create_test_database():
     yield
     metadata.drop_all(engine)
 
-
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
-async def test_query_async():
-    """Be sure the graphql server run."""
-    query = """
-        query isServerAlive {
-            server
-        }
-    """
-    response = await schema.execute(query)
-    assert response.errors is None
-    assert response.data
-    assert response.data["server"] == "Is alive !"
 
 
 @pytest.mark.parametrize("anyio_backend", ["asyncio"])
