@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse, HTMLResponse
 
-from .auth.admin import CheckAdminMiddleware
+from .auth.admin import CheckAdminMiddleware, install_admin_user
 from .config import settings
 from .db import base as db
 from .graphql import base as gql
@@ -22,6 +22,7 @@ async def startup() -> None:
     database_ = app.state.database
     if not database_.is_connected:
         await database_.connect()
+        await install_admin_user()
 
 
 @app.on_event("shutdown")
