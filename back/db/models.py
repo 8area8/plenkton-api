@@ -4,8 +4,8 @@ import datetime
 from typing import Type, cast
 
 import ormar
-from slugify import slugify
 import readtime
+from slugify import slugify
 
 from .base import MainMeta
 
@@ -24,6 +24,8 @@ class Author(ormar.Model):
 
     email = cast(str, ormar.String(max_length=255, nullable=False))
     username = cast(str, ormar.String(max_length=255))
+
+    is_admin = ormar.Boolean(default=False)
 
 
 class Tag(ormar.Model):

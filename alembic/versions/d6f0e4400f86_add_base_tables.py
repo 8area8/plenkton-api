@@ -1,16 +1,16 @@
-"""add author, article, tag
+"""Add the base tables.
 
-Revision ID: 44da46a04765
-Revises: 
-Create Date: 2022-02-25 08:54:38.282084
+Revision ID: d6f0e4400f86
+Revises: 44da46a04765
+Create Date: 2022-03-02 08:43:22.945866
 
 """
-from alembic import op
 import sqlalchemy as sa
 
+from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = "44da46a04765"
+revision = "d6f0e4400f86"
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,6 +24,7 @@ def upgrade():
         sa.Column("auth0_id", sa.String(length=255), nullable=False),
         sa.Column("email", sa.String(length=255), nullable=False),
         sa.Column("username", sa.String(length=255), nullable=False),
+        sa.Column("is_admin", sa.Boolean(), nullable=True),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("auth0_id"),
     )
