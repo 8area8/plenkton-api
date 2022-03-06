@@ -4,7 +4,6 @@ from pydantic import BaseSettings
 from starlette.config import Config
 from starlette.datastructures import Secret
 
-
 config = Config()
 
 
@@ -35,6 +34,8 @@ class Settings(BaseSettings):
     AUTH0_ISSUER = config("AUTH0_ISSUER", default="")
     AUTH0_DOMAIN = config("AUTH0_DOMAIN", default="")
     AUTH0_ALGORITHMS = config("AUTH0_ALGORITHMS", default="RS256")
+    AUTH0_CLIENT_ID = config("AUTH0_CLIENT_ID", default="")
+    AUTH0_CLIENT_SECRET = config("AUTH0_CLIENT_SECRET", default="")
 
 
 settings = Settings()

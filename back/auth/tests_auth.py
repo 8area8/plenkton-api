@@ -5,10 +5,10 @@ from unittest.mock import patch
 import pytest
 from httpx import AsyncClient
 
+from back.__main__ import app
 from back.auth.admin import CheckAdminMiddleware
 from back.db.base import database, metadata, settings, sqlalchemy
 from back.db.models import Author
-from back.server import app
 
 from .admin import install_admin_user
 
@@ -29,6 +29,16 @@ def create_test_database():
     yield
     metadata.drop_all(engine)
 
+
+@pytest.mark.parametrize("anyio_backend", ["asyncio"])
+async def test_install_admin_user():
+    """Test the installation of the admin user."""
+    async with database:
+        async with database.transaction(force_rollback=True):
+            assert await Author.objects.get_or_none(username="8area8") is None
+            result = await install_admin_user()
+            assert result
+            assert await Author.objects.get_or_none(username="8area8") is not None
 
 
 @pytest.mark.parametrize("anyio_backend", ["asyncio"])

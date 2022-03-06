@@ -1,11 +1,25 @@
 """Retrieve the admin from Auth0."""
 
-from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from back.db.models import Author
 
+from .auth0 import AuthAPI
 from .jwt import VerifyToken
+
+
+async def install_admin_user() -> bool:
+    """Retrieve the admin from AUth0 and assign it to the Author."""
+    ADMIN_ID = "github|28759924"
+    api = AuthAPI()
+    users = api.list_users()
+    for user in users:
+        if user.user_id == ADMIN_ID:
+            await Author.objects.get_or_create(
+                username="8area8", email=user.email, auth0_id=user.user_id
+            )
+            return True
+    return False
 
 
 class CheckAdminMiddleware(BaseHTTPMiddleware):
