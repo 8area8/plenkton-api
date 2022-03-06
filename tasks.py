@@ -51,7 +51,7 @@ def pytest(command):
 
 
 @task
-def make_migrations(command, msg):
+def make_migrations(command, msg=""):
     """Generate alembic migration"""
     command.run(f"{PYTHON_DOCKER} alembic revision --autogenerate -m {msg}", pty=True)
 
@@ -59,9 +59,7 @@ def make_migrations(command, msg):
 @task
 def revert_migration(command, version_identifier):
     """Revert alembic migration"""
-    command.run(
-        f"{PYTHON_DOCKER} alembic downgrade {version_identifier} --sql", pty=True
-    )
+    command.run(f"{PYTHON_DOCKER} alembic downgrade {version_identifier}", pty=True)
 
 
 @task
@@ -73,4 +71,4 @@ def show_migrations(command):
 @task
 def migrate(command):
     """Apply alembic migrations to the current database."""
-    command.run(f"{PYTHON_DOCKER} alembic upgrade head --sql", pty=True)
+    command.run(f"{PYTHON_DOCKER} alembic upgrade head", pty=True)
