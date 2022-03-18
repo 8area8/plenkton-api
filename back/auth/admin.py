@@ -1,16 +1,26 @@
 """Retrieve the admin from Auth0."""
 
+from dataclasses import dataclass
+
+from fastapi.security import HTTPBearer
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from back.db.models import Author
 
 from .auth0 import AuthAPI
-from .jwt import VerifyToken
+from .jwt import requires_auth
+
+ADMIN_ID = "github|28759924"
+
+
+@dataclass
+class Token:
+    scheme: bytes
+    credentials: str
 
 
 async def install_admin_user() -> bool:
     """Retrieve the admin from AUth0 and assign it to the Author."""
-    ADMIN_ID = "github|28759924"
     api = AuthAPI()
     users = api.list_users()
     for user in users:
@@ -28,13 +38,19 @@ class CheckAdminMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
         request.state.is_admin = False
         request.state.user = None
+
         token = request.headers.get("Authorization")
         if token:
-            result = VerifyToken(token).verify()
+            scheme, credentials = token.split(" ")
+            token = Token(scheme=scheme, credentials=credentials)
+            result = await requires_auth(token)
 
-            if author := await Author.objects.get_or_none(id_auth0=result["id"]):
-                request.state.is_admin = True
-                request.state.user = author
+            if not result.get("status") == "error":
+                author = await Author.objects.get_or_none(auth0_id=result["sub"])
+                if author:
+                    request.state.user = author
+                    if author.auth0_id == ADMIN_ID:
+                        request.state.is_admin = True
 
         response = await call_next(request)
         return response

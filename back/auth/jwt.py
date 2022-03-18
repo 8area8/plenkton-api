@@ -9,40 +9,62 @@ if result.get("status"):
     return result
 """
 
-import jwt
+import json
+from typing import TYPE_CHECKING
+
+import httpx
+from fastapi import HTTPException
+from jose import jwt
 
 from back.config import settings
 
+if TYPE_CHECKING:
+    from .admin import Token
 
-class VerifyToken:
-    """Does all the token verification using PyJWT"""
 
-    def __init__(self, token):
-        self.token = token
-
-        # This gets the JWKS from a given URL and does processing so you can
-        # use any of the keys available
-        jwks_url = f"https://{settings.AUTH0_DOMAIN}/.well-known/jwks.json"
-        self.jwks_client = jwt.PyJWKClient(jwks_url)
-
-    def verify(self):
-        # This gets the 'kid' from the passed token
-        try:
-            self.signing_key = self.jwks_client.get_signing_key_from_jwt(self.token).key
-        except jwt.exceptions.PyJWKClientError as error:
-            return {"status": "error", "msg": error.__str__()}
-        except jwt.exceptions.DecodeError as error:
-            return {"status": "error", "msg": error.__str__()}
-
+async def requires_auth(token: "Token"):
+    """Determines if the Access Token is valid"""
+    async with httpx.AsyncClient() as client:
+        jsonurl = await client.get(
+            f"https://{settings.AUTH0_DOMAIN}/.well-known/jwks.json"
+        )
+    jwks = json.loads(jsonurl.read())
+    unverified_header = jwt.get_unverified_header(token.credentials)
+    rsa_key = {}
+    for key in jwks["keys"]:
+        if key["kid"] == unverified_header.get("kid"):
+            rsa_key = {
+                "kty": key["kty"],
+                "kid": key["kid"],
+                "use": key["use"],
+                "n": key["n"],
+                "e": key["e"],
+            }
+    if rsa_key:
         try:
             payload = jwt.decode(
-                self.token,
-                self.signing_key,
+                token.credentials,
+                rsa_key,
                 algorithms=[settings.AUTH0_ALGORITHMS],
                 audience=settings.AUTH0_AUDIENCE,
-                issuer=settings.AUTH0_ISSUER,
+                issuer=f"https://{settings.AUTH0_DOMAIN}/",
             )
-        except Exception as e:
-            return {"status": "error", "message": str(e)}
+        except jwt.ExpiredSignatureError:
+            raise HTTPException(status_code=401, detail="token is expired")
+        except jwt.JWTClaimsError:
+            raise HTTPException(
+                status_code=401,
+                detail="incorrect claims, please check the audience and issuer",
+            )
+        except Exception:
+            raise HTTPException(
+                status_code=401,
+                detail="Unable to parse authentication",
+            )
 
         return payload
+
+    raise HTTPException(
+        status_code=401,
+        detail="Unable to find appropriate key",
+    )
