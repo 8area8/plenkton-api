@@ -1,17 +1,16 @@
 <template>
   <div class="admin">
-      This is the admin dashboard (supercharge the home dashboard with custom slots)
+    <div>Loading...</div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { injectAuth } from 'vue-auth0-plugin'
+import { injectAuth } from "vue-auth0-plugin";
 
 const auth = injectAuth();
-
 if (auth) {
   if (!auth.authenticated) {
-      auth.loginWithRedirect();
+    await auth?.client?.loginWithRedirect()
   }
 }
 </script>
