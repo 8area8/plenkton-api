@@ -40,3 +40,12 @@ services:
       - ./front:/code
     ports:
       - "3000:3000"
+  e2e:
+    environment:
+      - HOST=web
+    build:
+      context: ./e2e/
+    command: /bin/bash
+    container_name: playwright
+    volumes:
+      - ./e2e:/code

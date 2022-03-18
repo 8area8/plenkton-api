@@ -7,6 +7,7 @@ from invoke import task
 
 PYTHON_DOCKER = "docker-compose run --rm web"
 VUE_DOCKER = "docker-compose run --rm vue"
+PLAYWRIGHT_DOCKER = "docker-compose run --rm e2e"
 
 
 @task
@@ -54,9 +55,21 @@ def vuesh(command):
 
 
 @task
+def pythonsh(command):
+    """Create bash for python."""
+    command.run(f"{PYTHON_DOCKER} /bin/sh", pty=True)
+
+
+@task
 def pytest(command):
     """Run the python tests inside the web container."""
     command.run("pytest back", pty=True)
+
+
+@task
+def e2e(command):
+    """Run the playwright inside the web container."""
+    command.run(f"{PLAYWRIGHT_DOCKER} pytest", pty=True)
 
 
 @task
