@@ -33,6 +33,15 @@ def repop(command):
 
 
 @task
+def runserver(command):
+    """Run the server dynamically."""
+    command.run(
+        "docker-compose run --rm --service-ports"
+        " web uvicorn back.__main__:app --host='0.0.0.0' --debug --reload"
+    )
+
+
+@task
 def jest(command):
     """Run the Jest tests inside the vue container."""
     command.run(f"{VUE_DOCKER} yarn run jest", pty=True)
