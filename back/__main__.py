@@ -22,7 +22,6 @@ async def startup() -> None:
     database_ = app.state.database
     if not database_.is_connected:
         await database_.connect()
-        await install_admin_user()
 
 
 @app.on_event("shutdown")
