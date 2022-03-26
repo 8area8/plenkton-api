@@ -4,6 +4,7 @@ https://strawberry.rocks/docs/operations/testing
 """
 
 import pytest
+
 from .base import schema
 
 pytestmark = pytest.mark.anyio
@@ -17,10 +18,7 @@ async def test_query_async():
             server
         }
     """
-    response = await schema.execute(
-        query, variable_values={"title": "The Great Gatsby"}
-    )
-
+    response = await schema.execute(query)
     assert response.errors is None
     assert response.data
     assert response.data["server"] == "Is alive !"

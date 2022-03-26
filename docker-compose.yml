@@ -17,10 +17,12 @@ services:
       - POSTGRES_PASSWORD=postgres
   web:
     build: .
-    command: uvicorn back.server:app --host='0.0.0.0' --debug --reload
+    command: uvicorn back.__main__:app --host='0.0.0.0' --debug --reload
     container_name: plenkton-app
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/plenktondb
+    env_file:
+      - .env
     volumes:
       - .:/code
     ports:
@@ -32,7 +34,18 @@ services:
       context: ./front/
     command: yarn run serve --host 0.0.0.0 --port 3000
     container_name: vuecli-app
+    env_file:
+      - .env
     volumes:
       - ./front:/code
     ports:
       - "3000:3000"
+  e2e:
+    environment:
+      - HOST=web
+    build:
+      context: ./e2e/
+    command: /bin/bash
+    container_name: playwright
+    volumes:
+      - ./e2e:/code

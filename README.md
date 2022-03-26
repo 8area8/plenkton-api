@@ -57,3 +57,18 @@ We deploy to heroku using the `.heroku.yml`. `Procfile` is not required. ;)
 - Set the container stack: `heroku stack:set container`
 - Set env variable `DEBUG` to False on Heroku: `heroku config:set DEBUG=False`
 - Configure the automatic deployment by [linking heroku to your github account](https://devcenter.heroku.com/articles/github-integration).
+
+## Environment variables
+
+```ini
+CLOUD_BASE_URL=data
+
+AUTH0_AUDIENCE=data
+AUTH0_ISSUER=data
+AUTH0_DOMAIN=data
+AUTH0_ALGORITHMS=data
+
+AUTH0_FRONT_ID=data
+AUTH0_CLIENT_ID=data
+AUTH0_CLIENT_SECRET=data
+```
