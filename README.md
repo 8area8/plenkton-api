@@ -10,11 +10,13 @@ We use Docker in development
 
 This project only uses Docker to develop and deploy the application.
 
-Use [VSCode remote container](https://code.visualstudio.com/docs/remote/containers) to build and launch the application.
+- Use [VSCode remote container](https://code.visualstudio.com/docs/remote/containers) to build and launch the application.
 
 ### Usage
 
 - You can now access to localhost:8000
+- Migrate your database (see [migration part](#Migrations))
+- Optional: add the admin user from `commands.ipnb`
 
 ## Google Cloud Storage
 
@@ -44,6 +46,8 @@ We deploy to heroku using the `.heroku.yml`. `Procfile` is not required. ;)
 
 ## Environment variables
 
+Add a `.env` at the root:
+
 ```ini
 CLOUD_BASE_URL=data
 
@@ -52,12 +56,21 @@ AUTH0_ISSUER=data
 AUTH0_DOMAIN=data
 AUTH0_ALGORITHMS=data
 
-AUTH0_FRONT_ID=data
 AUTH0_CLIENT_ID=data
 AUTH0_CLIENT_SECRET=data
 ```
 
-## Migrations
+Add a `.env` in `./front`:
+
+```ini
+VUE_APP_CLOUD_BASE_URL=data
+
+VUE_APP_AUTH0_AUDIENCE=data
+VUE_APP_AUTH0_ISSUER=data
+VUE_APP_AUTH0_FRONT_ID=data
+```
+
+## Migrations
 
 Use alembic to handle database migrations :
 - `alembic revision --autogenerate -m <msg>`: make migrations
