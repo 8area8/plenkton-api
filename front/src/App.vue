@@ -13,8 +13,6 @@ import { definePlugin, defaultPlugins, useClient } from "villus";
 
 const auth = injectAuth();
 
-console.log()
-
 /**
  * Villus - add the token to the request
  * https://villus.logaretm.com/guide/plugins#example---adding-authorization-headers
