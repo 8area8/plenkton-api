@@ -1,5 +1,2 @@
-
-!*/front/dist/*
-*/front/*
-*/postgres-data/*
-postgres-data
+data/*
+data

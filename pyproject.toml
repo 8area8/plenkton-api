@@ -20,7 +20,6 @@ ormar = {extras = ["postgresql"], version = "^0.10.24"}
 python-slugify = "^6.1.0"
 readtime = "^1.1.1"
 auth0-python = "^3.20.0"
-invoke = "^1.6.0"
 ipython = "^8.1.1"
 jupyterlab = "^3.3.0"
 python-jose = "^3.3.0"

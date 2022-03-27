@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 import { injectAuth } from "vue-auth0-plugin";
-import { createClient, definePlugin, defaultPlugins, useClient } from "villus";
+import { definePlugin, defaultPlugins, useClient } from "villus";
 
 const auth = injectAuth();
 
@@ -20,7 +20,6 @@ const auth = injectAuth();
 const authPlugin = definePlugin(async ({ opContext }) => {
   const token = localStorage.getItem("token");
   opContext.headers.Authorization = token ? `Bearer ${token}` : "";
-  console.log("token in middleware", token)
 });
 useClient({
   url: "/graphql",

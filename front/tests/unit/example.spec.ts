@@ -1,12 +1,15 @@
-import { shallowMount } from '@vue/test-utils'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { mount } from '@vue/test-utils'
+import Envar from '../../src/views/EnvVar.vue'
 
-describe('HelloWorld.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
-  })
+test('check environment variables', async() => {
+  expect(Envar).toBeTruthy()
+
+  const wrapper = mount(Envar)
+
+  expect(wrapper.text()).toContain('NODE_ENV (defined)')
+  expect(wrapper.text()).toContain('VUE_APP_CLOUD_BASE_URL (defined)')
+  expect(wrapper.text()).toContain('VUE_APP_AUTH0_AUDIENCE (defined)')
+  expect(wrapper.text()).toContain('VUE_APP_AUTH0_ISSUER (defined)')
+  expect(wrapper.text()).toContain('VUE_APP_AUTH0_FRONT_ID (defined)')
+  expect(wrapper.text()).toContain('BASE_URL (defined)')
 })

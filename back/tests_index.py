@@ -37,6 +37,28 @@ async def test_prod_server_is_alive(async_client):
 
 
 @pytest.mark.parametrize("anyio_backend", ["asyncio"])
+async def test_home_page_does_not_have_undefined_values(async_client):
+    """Be sure the generated dist works without missing env variables."""
+    response = await async_client.get("/")
+    assert response.status_code == 200
+    assert "undefined" not in str(response.content).lower()
+
+
+@pytest.mark.parametrize("anyio_backend", ["asyncio"])
+async def test_backend_env_var(async_client):
+    """Be sure the backend env var are set."""
+    # GCloud
+    assert settings.CLOUD_STATIC_URL
+    # auth0
+    assert settings.AUTH0_ALGORITHMS
+    assert settings.AUTH0_AUDIENCE
+    assert settings.AUTH0_CLIENT_ID
+    assert settings.AUTH0_CLIENT_SECRET
+    assert settings.AUTH0_DOMAIN
+    assert settings.AUTH0_ISSUER
+
+
+@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_requests_get_is_called_only_once(async_client):
     """Avoid multiple requests calls to retrieve the index.html on production."""
 

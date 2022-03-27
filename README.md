@@ -10,27 +10,13 @@ We use Docker in development
 
 This project only uses Docker to develop and deploy the application.
 
-- Install Docker and Docker-compose (don't forget the post install ;) )
-- Run `docker-compose build` at the root of the repository
+- Use [VSCode remote container](https://code.visualstudio.com/docs/remote/containers) to build and launch the application.
 
 ### Usage
 
-- Run `docker-compose up`
-- You can now access to localhost:3000 (and also localhost:8000)
-
-### How to access to the Python/nodeJs environments ?
-
-- These environments are accessible inside the web container :
-- Install Vscode Remote Container
-- Run VScode inside the web container
-- And _voila_ !
-
-### Using Python Invoke
-
-If you install invoke globally (`pip3 install invoke`), you can use the invoke tasks defined in [tasks.py](./tasks.py) !
-
-- pattern: `inv <task>`
-- example: `inv build` - will build the containers.
+- You can now access to localhost:8000
+- Migrate your database (see [migration part](#Migrations))
+- Optional: add the admin user from `commands.ipnb`
 
 ## Google Cloud Storage
 
@@ -60,6 +46,8 @@ We deploy to heroku using the `.heroku.yml`. `Procfile` is not required. ;)
 
 ## Environment variables
 
+Add a `.env` at the root:
+
 ```ini
 CLOUD_BASE_URL=data
 
@@ -68,7 +56,24 @@ AUTH0_ISSUER=data
 AUTH0_DOMAIN=data
 AUTH0_ALGORITHMS=data
 
-AUTH0_FRONT_ID=data
 AUTH0_CLIENT_ID=data
 AUTH0_CLIENT_SECRET=data
 ```
+
+Add a `.env` in `./front`:
+
+```ini
+VUE_APP_CLOUD_BASE_URL=data
+
+VUE_APP_AUTH0_AUDIENCE=data
+VUE_APP_AUTH0_ISSUER=data
+VUE_APP_AUTH0_FRONT_ID=data
+```
+
+## Migrations
+
+Use alembic to handle database migrations :
+- `alembic revision --autogenerate -m <msg>`: make migrations
+- `alembic downgrade <hash>`: downgrade to version
+- `alembic history`: show history
+- `alembic upgrade head`: migrate to last
