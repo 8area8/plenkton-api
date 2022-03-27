@@ -21,6 +21,13 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "admin" */ '../views/Admin.vue')
   }
 ]
+if (process.env.NODE_ENV === 'development') {
+  routes.push({
+    path: '/envar',
+    name: 'env-var',
+    component: () => import(/* webpackChunkName: "about" */ '../views/EnvVar.vue')
+  })
+}
 
 
 const router = createRouter({
