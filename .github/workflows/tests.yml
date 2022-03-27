@@ -16,6 +16,11 @@ jobs:
 
       - name: Run the tests
         run: cd front && yarn run jest
+        env:
+          VUE_APP_CLOUD_BASE_URL: ${{ secrets.CLOUD_BASE_URL }}
+          VUE_APP_AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+          VUE_APP_AUTH0_ISSUER: ${{ secrets.AUTH0_ISSUER }}
+          VUE_APP_AUTH0_FRONT_ID: ${{ secrets.AUTH0_FRONT_ID }}
 
       - name: Generate dist
         run: cd front && yarn run build
