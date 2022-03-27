@@ -14,6 +14,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
+RUN sudo apt-get update -y && sudo apt-get install vim -y
 
 ENV POETRY_VIRTUALENVS_CREATE=false
 
