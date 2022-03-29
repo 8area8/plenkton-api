@@ -3,5 +3,10 @@
         "back"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+        "path": "/bin/bash"
+      }
+    }
 }
