@@ -15,6 +15,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 RUN sudo apt-get update -y && sudo apt-get install vim -y
+RUN curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
 ENV POETRY_VIRTUALENVS_CREATE=false
 
