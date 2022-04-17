@@ -26,7 +26,10 @@ async def install_admin_user() -> bool:
     for user in users:
         if user.user_id == ADMIN_ID:
             await Author.objects.get_or_create(
-                username="8area8", email=user.email, auth0_id=user.user_id
+                username="8area8",
+                email=user.email,
+                auth0_id=user.user_id,
+                is_admin=True,
             )
             return True
     return False

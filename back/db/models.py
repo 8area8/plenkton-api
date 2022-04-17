@@ -27,6 +27,11 @@ class Author(ormar.Model):
 
     is_admin = ormar.Boolean(default=False)
 
+    @classmethod
+    async def get_admins(cls):
+        """Return the admins."""
+        return await Author.objects.filter(is_admin=True).all()
+
 
 class Tag(ormar.Model):
     """Categorize the articles."""
