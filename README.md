@@ -11,6 +11,7 @@ We use Docker in development
 This project only uses Docker to develop and deploy the application.
 
 - Use [VSCode remote container](https://code.visualstudio.com/docs/remote/containers) to build and launch the application.
+- Install a local docker volume. Open your Shell on local, and write `docker volume create pgplenkton`
 
 ### Usage
 
