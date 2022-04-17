@@ -74,7 +74,6 @@ VUE_APP_AUTH0_FRONT_ID=data
 ## Migrations
 
 Use alembic to handle database migrations :
-- `alembic revision --autogenerate -m <msg>`: make migrations
+- `alembic revision -m <msg>`: make migrations
 - `alembic downgrade <hash>`: downgrade to version
 - `alembic history`: show history
-- `alembic upgrade head`: migrate to last

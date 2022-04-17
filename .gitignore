@@ -108,3 +108,4 @@ __pycache__
 .secret
 
 postgres-data
+.doit.db
