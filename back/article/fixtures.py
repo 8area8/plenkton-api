@@ -18,8 +18,8 @@ class ArticlesFixture:
         """Create the articles."""
         admins = await Author.get_admins()
         for article in self.articles:
-            artocle_obj = await Article.objects.get_or_none(name=article["name"])
-            if not artocle_obj:
+            article_obj = await Article.objects.get_or_none(name=article["name"])
+            if not article_obj:
                 await Article.objects.create(**article, author=admins[0])
 
     async def remove(self):

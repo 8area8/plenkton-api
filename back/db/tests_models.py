@@ -3,13 +3,13 @@
 """
 
 import pytest
-from pydantic import ValidationError
 from asyncpg.exceptions import UniqueViolationError
+from pydantic import ValidationError
 
-from .models import Author, Article, Tag
-from .base import database, sqlalchemy, metadata, settings
+from .base import database, metadata, settings, sqlalchemy
+from .models import Article, Author, Tag
 
-pytestmark = pytest.mark.anyio
+pytestmark = pytest.mark.asyncio
 
 
 AUTHOR_PAYLOAD = dict(username="pseudo", email="test@test.fr", auth0_id="fake_id")
@@ -34,7 +34,6 @@ def create_test_database():
     metadata.drop_all(engine)
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_author_creation():
     """We can create an author."""
     async with database:
@@ -44,7 +43,6 @@ async def test_author_creation():
             assert await Author.objects.get(username="pseudo") == author
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_article_creation():
     """We can create an article.
 
@@ -63,7 +61,6 @@ async def test_article_creation():
             assert article.author == author
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_article_has_slug_url():
     """The slug url correspond to the name."""
     async with database:
@@ -74,7 +71,6 @@ async def test_article_has_slug_url():
             assert article.url == "my-name-is-not-a-slug"
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_article_has_reading_time():
     """The reading time correspond to the body."""
     async with database:
@@ -89,7 +85,6 @@ async def test_article_has_reading_time():
             assert article.reading_time == 13
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_article_can_have_tags():
     """An article can have many tags."""
     async with database:
@@ -105,7 +100,6 @@ async def test_article_can_have_tags():
             assert article.tags == [python, javascript]
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_tag_creation():
     """We can create tags.
 
@@ -123,7 +117,6 @@ async def test_tag_creation():
                 await Tag.objects.create(name="tag1")
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_tag_slugify():
     """Tag names are slugified by default."""
     async with database:
