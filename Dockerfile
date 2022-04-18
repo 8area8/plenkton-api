@@ -23,9 +23,10 @@ RUN mkdir /code
 WORKDIR /code
 
 RUN mkdir /code/front
-COPY front/package.json front/yarn.lock /code/front/
+COPY front/.yarn /code/front/.yarn
+COPY front/package.json front/yarn.lock front/.yarnrc front/node_modules /code/front/
+RUN yarn set version berry
 RUN cd /code/front; yarn install
-RUN cd /code/front; yarn global add @vue/cli
 
 COPY pyproject.toml poetry.lock /code/
 RUN cd /code; poetry install --no-interaction --no-ansi

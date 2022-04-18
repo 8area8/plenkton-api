@@ -109,3 +109,12 @@ __pycache__
 
 postgres-data
 .doit.db
+
+# yarn
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
