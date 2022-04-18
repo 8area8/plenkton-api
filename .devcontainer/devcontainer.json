@@ -29,7 +29,10 @@
     "GitHub.vscode-pull-request-github",
     "johnsoncodehk.volar",
     "ms-azuretools.vscode-docker",
-    "GitHub.copilot"
+    "GitHub.copilot",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "rvest.vs-code-prettier-eslint",
+    "esbenp.prettier-vscode"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
