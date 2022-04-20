@@ -2,9 +2,13 @@
 
 import asyncio
 
+import sqlalchemy
+
 from back.article.fixtures import ArticlesFixture
 from back.auth.admin import install_admin_user
+from back.config import settings
 from back.db.base import database
+from back.db.models import MainMeta
 
 
 def task_install_fixtures():
@@ -45,5 +49,24 @@ def task_add_admin():
 
     return {
         "actions": [add_admin],
+        "verbosity": 2,
+    }
+
+
+def task_dropdb():
+    """Drop the database."""
+
+    def drop_db(targets):
+        engine = sqlalchemy.create_engine(settings.DB_DSN)
+        MainMeta.metadata.drop_all(engine)
+        try:
+            engine.execute("drop table alembic_version")
+        except Exception:
+            pass
+
+        print("Database purged !")
+
+    return {
+        "actions": [drop_db],
         "verbosity": 2,
     }
