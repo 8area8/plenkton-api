@@ -17,21 +17,21 @@
 </template>
 
 <script lang="ts" setup>
-import ListArticles from "@/components/article/ArticleList.vue";
+  import ListArticles from '@/components/article/ArticleList.vue'
 
-import { injectAuth } from 'vue-auth0-plugin'
-import { useQuery } from "villus";
-import { watchEffect } from "vue";
+  import { injectAuth } from 'vue-auth0-plugin'
+  import { useQuery } from 'villus'
+  import { watchEffect } from 'vue'
 
-const auth = injectAuth();
-const { data, error, isFetching, execute } = useQuery({
-  query: `query ShowAdminPanel { privateAdmin }`
-})
-watchEffect(async () => {
-  if (auth) {
-    const token = await auth?.client?.getTokenSilently()
-    localStorage.setItem("token", token || '')
-    await execute()
-  }
-})
+  const auth = injectAuth()
+  const { data, error, isFetching, execute } = useQuery({
+    query: `query ShowAdminPanel { privateAdmin }`,
+  })
+  watchEffect(async () => {
+    if (auth) {
+      const token = await auth?.client?.getTokenSilently()
+      localStorage.setItem('token', token || '')
+      await execute()
+    }
+  })
 </script>
