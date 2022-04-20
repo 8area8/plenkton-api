@@ -22,14 +22,14 @@ ENV POETRY_VIRTUALENVS_CREATE=false
 RUN mkdir /code
 WORKDIR /code
 
-RUN mkdir /code/front
-COPY front/.yarn /code/front/.yarn
-COPY front/package.json front/yarn.lock front/.yarnrc front/node_modules /code/front/
-RUN yarn set version berry
-RUN cd /code/front; yarn install
-
 COPY pyproject.toml poetry.lock /code/
 RUN cd /code; poetry install --no-interaction --no-ansi
+
+RUN mkdir /code/front
+COPY front/.yarn /code/front/.yarn
+COPY front/package.json front/yarn.lock front/.yarnrc.yml front/node_modules /code/front/
+RUN yarn set version berry
+RUN cd /code/front; yarn install
 
 COPY . /code
 
