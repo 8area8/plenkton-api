@@ -35,6 +35,7 @@ app.add_middleware(CheckAdminMiddleware)
 
 if settings.DEBUG:
     app.mount("/static", StaticFiles(directory="front/dist"), name="static")
+    app.mount("/public", StaticFiles(directory="front/src/public"), name="public")
 
 
 class HTMLIndex:

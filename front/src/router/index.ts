@@ -5,7 +5,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/about',
@@ -13,26 +13,28 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
   },
   {
     path: '/dring',
     name: 'admin',
-    component: () => import(/* webpackChunkName: "admin" */ '../views/Admin.vue')
-  }
+    component: () =>
+      import(/* webpackChunkName: "admin" */ '../views/Admin.vue'),
+  },
 ]
 if (process.env.NODE_ENV === 'development') {
   routes.push({
     path: '/envar',
     name: 'env-var',
-    component: () => import(/* webpackChunkName: "about" */ '../views/EnvVar.vue')
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/EnvVar.vue'),
   })
 }
 
-
 const router = createRouter({
-  history: createWebHistory("/"),
-  routes
+  history: createWebHistory('/'),
+  routes,
 })
 
 export default router

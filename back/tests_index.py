@@ -7,7 +7,7 @@ from httpx import AsyncClient
 
 from back.__main__ import HTMLIndex, app, settings
 
-pytestmark = pytest.mark.anyio
+pytestmark = pytest.mark.asyncio
 
 
 @pytest.fixture(scope="function")
@@ -16,7 +16,6 @@ async def async_client():
         yield client
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_server_is_alive(async_client):
     """Home page returns HTML content."""
     response = await async_client.get("/")
@@ -24,7 +23,6 @@ async def test_server_is_alive(async_client):
     assert "<!doctype html>" in str(response.content).lower()
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_prod_server_is_alive(async_client):
     """Home page returns HTML content."""
     CLOUD_STATIC_URL = settings.CLOUD_STATIC_URL
@@ -36,7 +34,6 @@ async def test_prod_server_is_alive(async_client):
     settings.DEBUG = True
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_home_page_does_not_have_undefined_values(async_client):
     """Be sure the generated dist works without missing env variables."""
     response = await async_client.get("/")
@@ -44,7 +41,6 @@ async def test_home_page_does_not_have_undefined_values(async_client):
     assert "undefined" not in str(response.content).lower()
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_backend_env_var(async_client):
     """Be sure the backend env var are set."""
     # GCloud
@@ -58,7 +54,6 @@ async def test_backend_env_var(async_client):
     assert settings.AUTH0_ISSUER
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_requests_get_is_called_only_once(async_client):
     """Avoid multiple requests calls to retrieve the index.html on production."""
 

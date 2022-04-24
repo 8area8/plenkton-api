@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts" setup>
-import { injectAuth } from "vue-auth0-plugin";
+  import { injectAuth } from 'vue-auth0-plugin'
 
-const auth = injectAuth();
-if (auth) {
-  if (!auth.authenticated) {
-    await auth?.client?.loginWithRedirect()
+  const auth = injectAuth()
+  if (auth) {
+    if (!auth.authenticated) {
+      await auth?.client?.loginWithRedirect()
+    }
   }
-}
 </script>
