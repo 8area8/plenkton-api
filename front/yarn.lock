@@ -2951,6 +2951,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/eslint-config-prettier@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@vue/eslint-config-prettier@npm:7.0.0"
+  dependencies:
+    eslint-config-prettier: ^8.3.0
+    eslint-plugin-prettier: ^4.0.0
+  peerDependencies:
+    eslint: ">= 7.28.0"
+    prettier: ">= 2.0.0"
+  checksum: febfd7f70369426bc3a481845b26a5d0c2cf26be8bf6b45dd96134529ce63f436e070785084c5c6b9579021cdca5ab26926cc75ea4b08f2cbe6cf9f8857f09e2
+  languageName: node
+  linkType: hard
+
 "@vue/eslint-config-typescript@npm:^9.1.0":
   version: 9.1.0
   resolution: "@vue/eslint-config-typescript@npm:9.1.0"
@@ -5873,7 +5886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.5.0":
+"eslint-config-prettier@npm:^8.3.0, eslint-config-prettier@npm:^8.5.0":
   version: 8.5.0
   resolution: "eslint-config-prettier@npm:8.5.0"
   peerDependencies:
@@ -6515,6 +6528,7 @@ __metadata:
     "@vue/cli-plugin-unit-jest": ~5.0.0
     "@vue/cli-plugin-vuex": ~5.0.0
     "@vue/cli-service": ~5.0.0
+    "@vue/eslint-config-prettier": ^7.0.0
     "@vue/eslint-config-typescript": ^9.1.0
     "@vue/test-utils": ^2.0.0-0
     "@vue/vue3-jest": ^27.0.0-alpha.1
