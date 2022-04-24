@@ -8,7 +8,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - "./data/postgres-data:/var/lib/postgresql/data"
+      - "pgplenkton:/var/lib/postgresql/data"
   test-db:
     image: postgres
     environment:
@@ -48,3 +48,6 @@ services:
     container_name: playwright
     volumes:
       - ./e2e:/code
+
+volumes:
+  pgplenkton:

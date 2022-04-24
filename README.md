@@ -11,6 +11,7 @@ We use Docker in development
 This project only uses Docker to develop and deploy the application.
 
 - Use [VSCode remote container](https://code.visualstudio.com/docs/remote/containers) to build and launch the application.
+- Install a local docker volume. Open your Shell on local, and write `docker volume create pgplenkton`
 
 ### Usage
 
@@ -73,7 +74,6 @@ VUE_APP_AUTH0_FRONT_ID=data
 ## Migrations
 
 Use alembic to handle database migrations :
-- `alembic revision --autogenerate -m <msg>`: make migrations
+- `alembic revision -m <msg>`: make migrations
 - `alembic downgrade <hash>`: downgrade to version
 - `alembic history`: show history
-- `alembic upgrade head`: migrate to last

@@ -1,0 +1,11 @@
+type Article {
+  id: Int!
+  name: String!
+  createdAt: String!
+  teaser: String!
+  tags: [String]!
+}
+
+type Query {
+  articles: [Article]!
+}

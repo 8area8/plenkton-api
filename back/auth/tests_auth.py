@@ -12,7 +12,7 @@ from back.db.models import Author
 
 from .admin import install_admin_user
 
-pytestmark = pytest.mark.anyio
+pytestmark = pytest.mark.asyncio
 
 
 @pytest.fixture(scope="function")
@@ -30,7 +30,6 @@ def create_test_database():
     metadata.drop_all(engine)
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_install_admin_user():
     """Test the installation of the admin user."""
     async with database:
@@ -41,7 +40,6 @@ async def test_install_admin_user():
             assert await Author.objects.get_or_none(username="8area8") is not None
 
 
-@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_private_admin(async_client):
     """Test the access to the private admin query.
 

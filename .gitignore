@@ -108,3 +108,13 @@ __pycache__
 .secret
 
 postgres-data
+.doit.db
+
+# yarn
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

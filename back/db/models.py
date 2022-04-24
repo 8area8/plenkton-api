@@ -20,12 +20,17 @@ class Author(ormar.Model):
         pass
 
     id = cast(int, ormar.Integer(primary_key=True))
-    auth0_id = cast(str, ormar.String(max_length=255, nullable=False, unique=True))
+    auth0_id: str = cast(str, ormar.String(max_length=255, nullable=False, unique=True))
 
-    email = cast(str, ormar.String(max_length=255, nullable=False))
-    username = cast(str, ormar.String(max_length=255))
+    email: str = cast(str, ormar.String(max_length=255, nullable=False))
+    username: str = cast(str, ormar.String(max_length=255))
 
-    is_admin = ormar.Boolean(default=False)
+    is_admin: bool = ormar.Boolean(default=False)
+
+    @classmethod
+    async def get_admins(cls):
+        """Return the admins."""
+        return await Author.objects.filter(is_admin=True).all()
 
 
 class Tag(ormar.Model):
