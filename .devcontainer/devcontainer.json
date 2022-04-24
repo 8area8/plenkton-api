@@ -32,7 +32,8 @@
     "GitHub.copilot",
     "ms-vscode.vscode-typescript-tslint-plugin",
     "rvest.vs-code-prettier-eslint",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "GraphQL.vscode-graphql"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.

@@ -47,7 +47,9 @@ async def query_articles(self, info: types.Info) -> list["Article"]:
         data = article.dict()
 
         author = await DBAuthor.objects.get(id=article.author.id)
-        data["author"] = Author(**author.dict())
+        author = author.dict()
+        author["articles"] = []  # HACK: to resolve
+        data["author"] = Author(**author)
 
         tags = []
         for tag in article.tags:
