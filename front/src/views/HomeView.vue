@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <div v-if="auth?.user">{{ auth?.user.name }} - {{ auth?.user.sub }}</div>
     <br />
     {{ auth?.authenticated }}

@@ -4,6 +4,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import './assets/tailwind.css'
+import './assets/fonts.css'
 import VueAuth0Plugin from 'vue-auth0-plugin'
 
 // https://www.npmjs.com/package/vue-auth0-plugin
